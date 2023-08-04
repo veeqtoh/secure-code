@@ -8,31 +8,41 @@ use Illuminate\Support\ServiceProvider;
 class DoorAccessServiceProvider extends ServiceProvider
 {
     /**
-     * Register services.
+     * Bootstrap the application services.
      *
      * @return void
      */
-    public function register(): void
+    public function boot()
     {
-        $this->app->singleton('code.generator', function ($app) {
-            return new CodeGenerator();
-        });
+        // Publish the package configuration file to the Laravel application
+        $this->publishes([
+            __DIR__ . '/Config/config.php' => config_path('door-access.php'),
+        ], 'config');
 
-        $this->app->singleton('code.manager', function ($app) {
-            return new CodeManager();
-        });
+        // Migrate the package's database tables
+        $this->loadMigrationsFrom(__DIR__ . '/Database/migrations');
     }
 
     /**
-     * Bootstrap services.
+     * Register the application services.
      *
      * @return void
      */
-    public function boot(): void
+    public function register()
     {
-        // Publish the configuration file when the package is booted
-        $this->publishes([
-            __DIR__.'/../config/door-access.php' => config_path('door-access.php'),
-        ], 'config');
+        // Merge the package configuration with the Laravel application's configuration
+        $this->mergeConfigFrom(__DIR__ . '/Config/config.php', 'door-access');
+
+        // Bind the database implementation to the container
+        $this->app->bind(Database\DatabaseInterface::class, Database\SQLiteDatabase::class);
+
+        // Bind the code generator and code manager into the container
+        $this->app->singleton(CodeGenerator::class, function ($app) {
+            return new CodeGenerator(config('door-access.rules'));
+        });
+
+        $this->app->singleton(CodeManager::class, function ($app) {
+            return new CodeManager($app->make(Database\DatabaseInterface::class));
+        });
     }
 }

@@ -14,6 +14,7 @@ Generate door access code.
 
 use Veeqtoh\DoorAccess;
 
-$access_code = new DoorAccess(10);
-echo $access_code->generate();
+$rules = include 'config/rules.php';
+$codeGenerator = new CodeGenerator();
+$access_code = $codeGenerator->generateCode($rules);
 ```

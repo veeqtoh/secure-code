@@ -1,9 +1,12 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Veeqtoh\DoorAccess;
 
+/**
+ * Class CodeGenerator
+ * @package Veeqtoh\DoorAccess
+ */
 class CodeGenerator
 {
     /**

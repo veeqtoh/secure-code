@@ -4,12 +4,20 @@ declare(strict_types=1);
 namespace Veeqtoh\DoorAccess;
 
 use Illuminate\Support\Facades\DB;
+use Veeqtoh\DoorAccess\Database\DatabaseInterface;
 
+/**
+ * Class CodeManager
+ * @package Veeqtoh\DoorAccess
+ */
 class CodeManager
 {
-    public function __construct(private CodeGenerator $codeGenerator, private array $rules)
+    public function __construct(private CodeGenerator $codeGenerator,
+                                private DatabaseInterface $database,
+                                private array $rules)
     {
         $this->codeGenerator = $codeGenerator;
+        $this->database      = $database;
         $this->rules         = $rules;
     }
 

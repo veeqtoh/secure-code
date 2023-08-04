@@ -5,6 +5,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/packages/acme/door-access/vendor
 .env
 .env.backup
 .env.production

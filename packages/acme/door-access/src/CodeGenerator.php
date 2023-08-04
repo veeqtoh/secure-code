@@ -5,8 +5,8 @@ namespace Veeqtoh\DoorAccess;
 
 use Ramsey\Uuid\Uuid;
 
-class CodeGenerator{
-
+class CodeGenerator
+{
     /**
      * Generate a unique 6-digit code.
      *

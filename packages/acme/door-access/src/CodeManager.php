@@ -3,6 +3,8 @@ declare(strict_type=1);
 
 namespace Veeqtoh\DoorAccess;
 
+use Illuminate\Support\Facades\DB;
+
 class CodeManager
 {
     /**
@@ -13,8 +15,27 @@ class CodeManager
      */
     public function allocateCode(string $teamMemberId): ?string
     {
+        // Check if a code is already allocated to the team member in the database
+        $existingCode = DB::table('door_access_codes')
+            ->where('team_member_id', $teamMemberId)
+            ->value('code');
+
+        if ($existingCode) {
+            return $existingCode;
+        }
+
         $generator = app('code.generator');
-        return $generator->generateCode();
+        $code = $generator->generateCode();
+
+        // Store the generated code for the team member in the database
+        DB::table('door_access_codes')->insert([
+            'team_member_id' => $teamMemberId,
+            'code' => $code,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return $code;
     }
 
     /**
@@ -25,6 +46,20 @@ class CodeManager
      */
     public function resetCode(string $code): bool
     {
-        return true;
+        // Find the team member ID associated with the code in the database
+        $teamMemberId = DB::table('door_access_codes')
+            ->where('code', $code)
+            ->value('team_member_id');
+
+        if ($teamMemberId) {
+            // Remove the code from the database
+            DB::table('door_access_codes')
+                ->where('code', $code)
+                ->delete();
+
+            return true;
+        }
+
+        return false;
     }
 }

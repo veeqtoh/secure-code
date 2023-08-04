@@ -16,5 +16,5 @@ use Veeqtoh\DoorAccess;
 
 $rules = include 'config/rules.php';
 $codeGenerator = new CodeGenerator();
-$access_code = $codeGenerator->generateCode($rules);
+$accessCode = $codeGenerator->generateCode($rules);
 ```

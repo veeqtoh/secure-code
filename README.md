@@ -58,7 +58,7 @@ $ phpunit
 
 ## Contributing
 
-Contributions are'nt welcome at this time as this is a private project. If you'd like to contribute to the project, please reachout to me by mail (victorjohnukam@gmail.com)[mailto:victorjohnukam@gmail.com].
+Contributions are'nt welcome at this time as this is a private project. If you'd like to contribute to the project, please reachout to me by mail [victorjohnukam@gmail.com](victorjohnukam@gmail.com).
 
 ## Security
 

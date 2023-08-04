@@ -27,5 +27,12 @@
             "email": "victorjohnukam@gmail.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Veeqtoh\\DoorAccess\\DoorAccessServiceProvider"
+            ]
+        }
+    }
 }

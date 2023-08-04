@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class CodeManager
 {
+    public function __construct(private CodeGenerator $codeGenerator, private array $rules)
+    {
+        $this->codeGenerator = $codeGenerator;
+        $this->rules         = $rules;
+    }
+
     /**
      * Allocate a code to a team member.
      *
@@ -24,15 +30,14 @@ class CodeManager
             return $existingCode;
         }
 
-        $generator = app('code.generator');
-        $code = $generator->generateCode();
+        $code = $this->codeGenerator->generateCode($this->rules);
 
         // Store the generated code for the team member in the database
         DB::table('door_access_codes')->insert([
             'team_member_id' => $teamMemberId,
-            'code' => $code,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'code'           => $code,
+            'created_at'     => now(),
+            'updated_at'     => now(),
         ]);
 
         return $code;

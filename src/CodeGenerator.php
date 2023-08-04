@@ -40,10 +40,10 @@ class CodeGenerator
      */
     private function isCodeValid(string $code, array $rules): bool
     {
-        $allowedCharacters = $rules['allowed_characters'] ?? '0123456789';
+        $allowedCharacters      = $rules['allowed_characters'] ?? '0123456789';
         $characterRepeatedLimit = $rules['character_repeated_limit'] ?? 3;
-        $sequenceLengthLimit = $rules['sequence_length_limit'] ?? 3;
-        $uniqueCharactersLimit = $rules['unique_characters_limit'] ?? 3;
+        $sequenceLengthLimit    = $rules['sequence_length_limit'] ?? 3;
+        $uniqueCharactersLimit  = $rules['unique_characters_limit'] ?? 3;
 
         return (
             $this->isNotPalindrome($code) &&
@@ -99,7 +99,7 @@ class CodeGenerator
     private function hasAtLeastLimitUniqueCharacters(string $code, int $limit, string $allowedCharacters): bool
     {
         $allowedCharactersCount = count_chars($allowedCharacters, 1);
-        $codeCharactersCount = count_chars($code, 1);
+        $codeCharactersCount    = count_chars($code, 1);
 
         $uniqueCharactersCount = 0;
         foreach ($codeCharactersCount as $character => $count) {

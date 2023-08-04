@@ -11,9 +11,9 @@ return [
     |
     */
 
-    'code_length' => 6,
+    'code_length'              => 6,
     'character_repeated_limit' => 3,
-    'sequence_length_limit' => 3,
-    'unique_characters_limit' => 3,
-    'allowed_characters' => '0123456789',
+    'sequence_length_limit'    => 3,
+    'unique_characters_limit'  => 3,
+    'allowed_characters'       => '0123456789',
 ];

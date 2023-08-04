@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('door_access_codes', function (Blueprint $table) {
             $table->id();
+            $table->string('team_member_id')->unique();
+            $table->string('code', 6)->unique();
             $table->timestamps();
         });
     }

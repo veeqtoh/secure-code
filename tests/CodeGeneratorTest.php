@@ -1,104 +1,98 @@
 <?php
-declare(strict_types=1);
 
-namespace Tests\Unit;
+declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use Veeqtoh\DoorAccess\CodeGenerator;
 
 class CodeGeneratorTest extends TestCase
 {
-    /**
-     * Test if generateCode returns a unique six-digit code.
-     *
-     * @return void
-     */
     public function testGenerateCodeReturnsUniqueSixDigitCode()
     {
-        //
+        $codes     = [];
+        $rules     = $this->getRules();
+        $generator = new CodeGenerator();
+
+        for ($i = 0; $i < 100; $i++) {
+            $code = $generator->generateCode($rules);
+            $this->assertMatchesRegularExpression('/^[0-9]{6}$/', $code);
+            $this->assertNotContains($code, $codes);
+            $codes[] = $code;
+        }
     }
 
-    /**
-     * Test if the generated code is not a palindrome.
-     *
-     * @return void
-     */
     public function testGeneratedCodeIsNotPalindrome()
     {
-        //
+        $rules     = $this->getRules();
+        $generator = new CodeGenerator();
+
+        for ($i = 0; $i < 100; $i++) {
+            $code = $generator->generateCode($rules);
+            $this->assertFalse($this->isPalindrome($code));
+        }
     }
 
-    /**
-     * Test if the generated code has no character repeated more than three times.
-     *
-     * @return void
-     */
     public function testGeneratedCodeHasNoCharacterRepeatedMoreThanThreeTimes()
     {
-        //
+        $rules     = $this->getRules();
+        $generator = new CodeGenerator();
+
+        for ($i = 0; $i < 100; $i++) {
+            $code = $generator->generateCode($rules);
+            $this->assertFalse($this->hasCharacterRepeatedMoreThanThreeTimes($code));
+        }
     }
 
-    /**
-     * Test if the generated code has no sequence length greater than three.
-     *
-     * @return void
-     */
     public function testGeneratedCodeHasNoSequenceLengthGreaterThanThree()
     {
-        //
+        $rules     = $this->getRules();
+        $generator = new CodeGenerator();
+
+        for ($i = 0; $i < 100; $i++) {
+            $code = $generator->generateCode($rules);
+            $this->assertFalse($this->hasSequenceLengthGreaterThanThree($code));
+        }
     }
 
-    /**
-     * Test if the generated code has at least three unique characters.
-     *
-     * @return void
-     */
     public function testGeneratedCodeHasAtLeastThreeUniqueCharacters()
     {
-        //
+        $rules     = $this->getRules();
+        $generator = new CodeGenerator();
+
+        for ($i = 0; $i < 100; $i++) {
+            $code = $generator->generateCode($rules);
+            $this->assertTrue($this->hasAtLeastThreeUniqueCharacters($code));
+        }
     }
 
-    /**
-     * Check if a string is a palindrome.
-     *
-     * @param string $str
-     * @return bool
-     */
-    private function isPalindrome(string $str): bool
+    private function isPalindrome(string $code): bool
     {
-        // helper function to check if the string is a palindrome
+        return $code === strrev($code);
     }
 
-    /**
-     * Check if a string has any character repeated more than three times.
-     *
-     * @param string $str
-     * @return bool
-     */
-    private function hasRepeatedCharactersMoreThanThreeTimes(string $str): bool
+    private function hasCharacterRepeatedMoreThanThreeTimes(string $code): bool
     {
-        // helper function to check if the string has any character repeated more than three times
+        return (bool) preg_match('/(\d)\1{3,}/', $code);
     }
 
-    /**
-     * Check if a string has any sequence length greater than three.
-     *
-     * @param string $str
-     * @return bool
-     */
-    private function hasSequenceLengthGreaterThanThree(string $str): bool
+    private function hasSequenceLengthGreaterThanThree(string $code): bool
     {
-        // helper function to check if the string has any sequence length greater than three
+        return (bool) preg_match('/(\d)\1{2,}/', $code);
     }
 
-    /**
-     * Check if a string has at least three unique characters.
-     *
-     * @param string $str
-     * @return bool
-     */
-    private function hasAtLeastThreeUniqueCharacters(string $str): bool
+    private function hasAtLeastThreeUniqueCharacters(string $code): bool
     {
-        // helper function to check if the string has at least three unique characters
+        return count(array_count_values(str_split($code))) >= 3;
+    }
+
+    private function getRules()
+    {
+        $rules = [
+            'allowed_characters'       => '0123456789',
+            'character_repeated_limit' => 3,
+            'sequence_length_limit'    => 3,
+            'unique_characters_limit'  => 3,
+        ];
+        return $rules;
     }
 }

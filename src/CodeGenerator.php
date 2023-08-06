@@ -1,7 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Veeqtoh\DoorAccess;
+
+use Config\rules as RulesConfig;
 
 /**
  * Class CodeGenerator
@@ -12,11 +15,11 @@ class CodeGenerator
     /**
      * Generate a unique 6-digit code.
      *
-     * @param array $rules The rules for generating the code.
      * @return string|null The generated code or null if code generation fails.
      */
-    public function generateCode(array $rules): ?string
+    public function generateCode(): ?string
     {
+        $rules = $this->getRules();
         do {
             $code = $this->generateRandomCode();
         } while (!$this->isCodeValid($code, $rules));
@@ -112,5 +115,30 @@ class CodeGenerator
         }
 
         return $uniqueCharactersCount >= $limit;
+    }
+
+    /**
+     * Get the rules for validating characters in the access code to be generated.
+     *
+     * @return array An array containing the following rules:
+     * - 'allowed_characters' (string): A string containing the characters that are allowed.
+     * - 'character_repeated_limit' (int): The maximum number of times a character can be repeated consecutively.
+     * - 'sequence_length_limit' (int): The maximum length of a character sequence allowed.
+     * - 'unique_characters_limit' (int): The maximum number of unique characters allowed in the string.
+     */
+    private function getRules()
+    {
+        $defaultRules = [
+            'allowed_characters'       => '0123456789',
+            'character_repeated_limit' => 3,
+            'sequence_length_limit'    => 3,
+            'unique_characters_limit'  => 3,
+        ];
+
+        // Load rules from Config/rules.php file, if available
+        $rules = RulesConfig::$rulesConfig ?? [];
+
+        // Replace the default rules with the rules from Config/rules.php, if available
+        return array_replace($defaultRules, $rules);
     }
 }

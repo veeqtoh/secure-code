@@ -7,13 +7,13 @@ namespace Veeqtoh\DoorAccess\Database;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class SQLiteDatabase
+ * Class MySQLDatabase
  * @package Veeqtoh\DoorAccess\Database
  */
-class SQLiteDatabase implements DatabaseInterface
+class MySQLDatabase implements DatabaseInterface
 {
     /**
-     * Store the code associated with the team member in the SQLite database.
+     * Store the code associated with the team member in the MySQL database.
      *
      * @param string $teamMemberId
      * @param string $code
@@ -30,7 +30,7 @@ class SQLiteDatabase implements DatabaseInterface
     }
 
     /**
-     * Retrieve the code associated with the team member from the SQLite database.
+     * Retrieve the code associated with the team member from the MySQL database.
      *
      * @param string $teamMemberId
      * @return string|null
@@ -43,7 +43,7 @@ class SQLiteDatabase implements DatabaseInterface
     }
 
     /**
-     * Retrieve the team member id associated with a given code from the SQLite database.
+     * Retrieve the team member id associated with a given code from the MySQL database.
      *
      * @param string $code
      * @return int|null
@@ -56,7 +56,7 @@ class SQLiteDatabase implements DatabaseInterface
     }
 
     /**
-     * Delete the code from the SQLite database.
+     * Delete the code from the MySQL database.
      *
      * @param string $code
      * @return bool

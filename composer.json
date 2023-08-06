@@ -28,6 +28,7 @@
         }
     ],
     "minimum-stability": "stable",
+    "test": "vendor/bin/phpunit tests",
     "extra": {
         "laravel": {
             "providers": [

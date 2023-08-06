@@ -8,7 +8,7 @@ $ composer require veeqtoh/door-access
 ```
 
 ## Requirements
-* PHP version ^8.1.10
+* PHP version ^8.1.2
 * Laravel framework ^8.0 (if using within a Laravel application)
 
 ## Configuration

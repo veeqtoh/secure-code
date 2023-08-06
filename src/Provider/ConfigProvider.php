@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Providers;
+namespace Veeqtoh\DoorAccess\Provider;
 
 use Illuminate\Support\Facades\Config;
 

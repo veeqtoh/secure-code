@@ -12,13 +12,13 @@ use Veeqtoh\DoorAccess\Database\DatabaseInterface;
  */
 class CodeManager
 {
-    public function __construct(private CodeGenerator $codeGenerator,
-                                private DatabaseInterface $database,
-                                private array $rules)
+    public function __construct(
+        private CodeGenerator $codeGenerator,
+        private DatabaseInterface $database
+    )
     {
         $this->codeGenerator = $codeGenerator;
         $this->database      = $database;
-        $this->rules         = $rules;
     }
 
     /**

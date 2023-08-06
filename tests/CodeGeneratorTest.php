@@ -6,7 +6,7 @@ namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Veeqtoh\DoorAccess\CodeGenerator;
-use Veeqtoh\DoorAccess\Providers\ConfigProvider;
+use Veeqtoh\DoorAccess\Provider\ConfigProvider;
 
 /**
  * Class CodeGeneratorTest

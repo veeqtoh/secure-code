@@ -39,7 +39,7 @@ class MySQLDatabase implements DatabaseInterface
     public function store(string $teamMemberId, string $code): void
     {
         try {
-            $sql = "INSERT INTO {$this->table} (team_member_id, code, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
+            $sql  = "INSERT INTO {$this->table} (team_member_id, code, created_at, updated_at) VALUES (?, ?, NOW(), NOW())";
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$teamMemberId, $code]);
         } catch (PDOException $e) {
@@ -50,7 +50,7 @@ class MySQLDatabase implements DatabaseInterface
     public function retrieve(string $teamMemberId): ?string
     {
         try {
-            $sql = "SELECT code FROM {$this->table} WHERE team_member_id = ?";
+            $sql  = "SELECT code FROM {$this->table} WHERE team_member_id = ?";
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$teamMemberId]);
             return $stmt->fetchColumn() ?: null;
@@ -62,7 +62,7 @@ class MySQLDatabase implements DatabaseInterface
     public function retrieveTeamMemberId(string $code): ?string
     {
         try {
-            $sql = "SELECT team_member_id FROM {$this->table} WHERE code = ?";
+            $sql  = "SELECT team_member_id FROM {$this->table} WHERE code = ?";
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$code]);
             return $stmt->fetchColumn() ?: null;
@@ -74,7 +74,7 @@ class MySQLDatabase implements DatabaseInterface
     public function delete(string $code): bool
     {
         try {
-            $sql = "DELETE FROM {$this->table} WHERE code = ?";
+            $sql  = "DELETE FROM {$this->table} WHERE code = ?";
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$code]);
             return $stmt->rowCount() > 0;

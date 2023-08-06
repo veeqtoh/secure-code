@@ -1,92 +1,105 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\TestCase;
+use Veeqtoh\DoorAccess\CodeGenerator;
 use Veeqtoh\DoorAccess\CodeManager;
+use Veeqtoh\DoorAccess\Database\DatabaseInterface;
 
 class CodeManagerTest extends TestCase
 {
-    use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        // Set up the database with the door_access_codes table for testing
-        // The RefreshDatabase trait will automatically migrate the database before each test
-    }
-
-    /**
-     * Test if allocateCode generates a unique code and stores it in the database.
-     *
-     * @return void
-     */
     public function testAllocateCodeGeneratesUniqueCodeAndStoresInDatabase()
     {
-        // Arrange
-        $manager = new CodeManager();
+        // Create a mock for CodeGenerator
+        $codeGeneratorMock = $this->createMock(CodeGenerator::class);
+        $codeGeneratorMock->expects($this->once())
+            ->method('generateCode')
+            ->willReturn('123456');
 
-        // Act
-        $code1 = $manager->allocateCode('team_member_1');
-        $code2 = $manager->allocateCode('team_member_2');
+        // Create a mock for DatabaseInterface
+        $databaseMock = $this->createMock(DatabaseInterface::class);
+        $databaseMock->expects($this->once())
+            ->method('retrieve')
+            ->with('123')
+            ->willReturn(null);
+        $databaseMock->expects($this->once())
+            ->method('store')
+            ->with('123', '123456');
 
-        // Assert
-        $this->assertNotNull($code1);
-        $this->assertNotNull($code2);
-        $this->assertNotEquals($code1, $code2);
+        // Create an instance of CodeManager and inject the mocks
+        $codeManager = new CodeManager($codeGeneratorMock, $databaseMock);
+
+        // Call the allocateCode method
+        $accessCode = $codeManager->allocateCode('123');
+
+        // Assert the access code
+        $this->assertEquals('123456', $accessCode);
     }
 
-    /**
-     * Test if allocateCode returns an existing code if already allocated to a team member.
-     *
-     * @return void
-     */
-    public function testAllocateCodeReturnsExistingCodeIfAlreadyAllocated()
+    public function testAllocateCodeReturnsExistingCodeFromDatabase()
     {
-        // Arrange
-        $manager = new CodeManager();
+        // Create a mock for CodeGenerator
+        $codeGeneratorMock = $this->createMock(CodeGenerator::class);
 
-        // Act
-        $code1 = $manager->allocateCode('team_member_1');
-        $code2 = $manager->allocateCode('team_member_1');
+        // Create a mock for DatabaseInterface
+        $databaseMock = $this->createMock(DatabaseInterface::class);
+        $databaseMock->expects($this->once())
+            ->method('retrieve')
+            ->with('123')
+            ->willReturn('654321');
 
-        // Assert
-        $this->assertEquals($code1, $code2);
+        // Create an instance of CodeManager and inject the mocks
+        $codeManager = new CodeManager($codeGeneratorMock, $databaseMock);
+
+        // Call the allocateCode method
+        $accessCode = $codeManager->allocateCode('123');
+
+        // Assert the access code
+        $this->assertEquals('654321', $accessCode);
     }
 
-    /**
-     * Test if resetCode removes the code from the database.
-     *
-     * @return void
-     */
     public function testResetCodeRemovesCodeFromDatabase()
     {
-        // Arrange
-        $manager = new CodeManager();
+        // Create a mock for DatabaseInterface
+        $databaseMock = $this->createMock(DatabaseInterface::class);
+        $databaseMock->expects($this->once())
+            ->method('retrieveTeamMemberId')
+            ->with('123456')
+            ->willReturn('123');
 
-        // Act
-        $code = $manager->allocateCode('team_member_1');
-        $resetResult = $manager->resetCode($code);
+        $databaseMock->expects($this->once())
+            ->method('delete')
+            ->with('123456')
+            ->willReturn(true);
 
-        // Assert
-        $this->assertTrue($resetResult);
+        // Create an instance of CodeManager and inject the mock
+        $codeManager = new CodeManager($this->createMock(CodeGenerator::class), $databaseMock);
+
+        // Call the resetCode method
+        $result = $codeManager->resetCode('123456');
+
+        // Assert the result
+        $this->assertTrue($result);
     }
 
-    /**
-     * Test if resetCode returns false if the code is not allocated.
-     *
-     * @return void
-     */
-    public function testResetCodeReturnsFalseIfCodeNotAllocated()
+    public function testResetCodeReturnsFalseForNonExistingCode()
     {
-        // Arrange
-        $manager = new CodeManager();
+        // Create a mock for DatabaseInterface
+        $databaseMock = $this->createMock(DatabaseInterface::class);
+        $databaseMock->expects($this->once())
+            ->method('retrieveTeamMemberId')
+            ->with('654321')
+            ->willReturn(null);
 
-        // Act
-        $resetResult = $manager->resetCode('non_existing_code');
+        // Create an instance of CodeManager and inject the mock
+        $codeManager = new CodeManager($this->createMock(CodeGenerator::class), $databaseMock);
 
-        // Assert
-        $this->assertFalse($resetResult);
+        // Call the resetCode method
+        $result = $codeManager->resetCode('654321');
+
+        // Assert the result
+        $this->assertFalse($result);
     }
 }

@@ -6,7 +6,7 @@
         "test": "vendor/bin/phpunit tests"
     },
     "require": {
-        "php": "^8.1.10",
+        "php": "^8.1.2",
         "laravel/framework": "^8.0",
         "ramsey/uuid": "^4.0"
     },

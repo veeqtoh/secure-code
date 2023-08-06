@@ -27,6 +27,14 @@ interface DatabaseInterface
     public function retrieve(string $teamMemberId): ?string;
 
     /**
+     * Retrieve the team member id associated with a given code from the database.
+     *
+     * @param string $code
+     * @return int|null
+     */
+    public function retrieveTeamMemberId(string $code): ?string;
+
+    /**
      * Delete the code from the database.
      *
      * @param string $code

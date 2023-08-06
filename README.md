@@ -27,9 +27,8 @@ Generate a door access code using the `CodeGenerator` class:
 
 use Veeqtoh\DoorAccess\CodeGenerator;
 
-$rules = include 'config/rules.php';
 $codeGenerator = new CodeGenerator();
-$accessCode = $codeGenerator->generateCode($rules);
+$accessCode = $codeGenerator->generateCode();
 ```
 
 ## Database Management

@@ -2,19 +2,44 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit;
+
 use PHPUnit\Framework\TestCase;
 use Veeqtoh\DoorAccess\CodeGenerator;
+use Veeqtoh\DoorAccess\Providers\ConfigProvider;
 
+/**
+ * Class CodeGeneratorTest
+ * @package Veeqtoh\DoorAccess
+ */
 class CodeGeneratorTest extends TestCase
 {
+    private $configProviderMock;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Create a mock of ConfigProvider
+        $this->configProviderMock = $this->createMock(ConfigProvider::class);
+
+        // Set up the mock's behavior to return the rules you want to test
+        $this->configProviderMock->expects($this->any())
+            ->method('getRules')
+            ->willReturn([
+                'allowed_characters' => '0123456789',
+                'character_repeated_limit' => 3,
+                'sequence_length_limit' => 3,
+                'unique_characters_limit' => 3,
+            ]);
+    }
     public function testGenerateCodeReturnsUniqueSixDigitCode()
     {
         $codes     = [];
-        $rules     = $this->getRules();
-        $generator = new CodeGenerator();
+        $generator = new CodeGenerator($this->configProviderMock);
 
         for ($i = 0; $i < 100; $i++) {
-            $code = $generator->generateCode($rules);
+            $code = $generator->generateCode();
             $this->assertMatchesRegularExpression('/^[0-9]{6}$/', $code);
             $this->assertNotContains($code, $codes);
             $codes[] = $code;
@@ -23,44 +48,40 @@ class CodeGeneratorTest extends TestCase
 
     public function testGeneratedCodeIsNotPalindrome()
     {
-        $rules     = $this->getRules();
-        $generator = new CodeGenerator();
+        $generator = new CodeGenerator($this->configProviderMock);
 
         for ($i = 0; $i < 100; $i++) {
-            $code = $generator->generateCode($rules);
+            $code = $generator->generateCode();
             $this->assertFalse($this->isPalindrome($code));
         }
     }
 
     public function testGeneratedCodeHasNoCharacterRepeatedMoreThanThreeTimes()
     {
-        $rules     = $this->getRules();
-        $generator = new CodeGenerator();
+        $generator = new CodeGenerator($this->configProviderMock);
 
         for ($i = 0; $i < 100; $i++) {
-            $code = $generator->generateCode($rules);
+            $code = $generator->generateCode();
             $this->assertFalse($this->hasCharacterRepeatedMoreThanThreeTimes($code));
         }
     }
 
     public function testGeneratedCodeHasNoSequenceLengthGreaterThanThree()
     {
-        $rules     = $this->getRules();
-        $generator = new CodeGenerator();
+        $generator = new CodeGenerator($this->configProviderMock);
 
         for ($i = 0; $i < 100; $i++) {
-            $code = $generator->generateCode($rules);
+            $code = $generator->generateCode();
             $this->assertFalse($this->hasSequenceLengthGreaterThanThree($code));
         }
     }
 
     public function testGeneratedCodeHasAtLeastThreeUniqueCharacters()
     {
-        $rules     = $this->getRules();
-        $generator = new CodeGenerator();
+        $generator = new CodeGenerator($this->configProviderMock);
 
         for ($i = 0; $i < 100; $i++) {
-            $code = $generator->generateCode($rules);
+            $code = $generator->generateCode();
             $this->assertTrue($this->hasAtLeastThreeUniqueCharacters($code));
         }
     }
@@ -85,14 +106,4 @@ class CodeGeneratorTest extends TestCase
         return count(array_count_values(str_split($code))) >= 3;
     }
 
-    private function getRules()
-    {
-        $rules = [
-            'allowed_characters'       => '0123456789',
-            'character_repeated_limit' => 3,
-            'sequence_length_limit'    => 3,
-            'unique_characters_limit'  => 3,
-        ];
-        return $rules;
-    }
 }

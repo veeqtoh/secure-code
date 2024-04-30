@@ -4,27 +4,22 @@ declare(strict_types=1);
 
 namespace Veeqtoh\DoorAccess;
 
-use Veeqtoh\DoorAccess\Providers\ConfigProvider;
-
 /**
  * Class CodeGenerator
+ * The library class that is used for generating unique, secure codes.
+ *
  * @package Veeqtoh\DoorAccess
  */
 class CodeGenerator
 {
     /**
-     * @var array The rules for validating characters in the access code to be generated.
-     */
-    private array $rules;
-
-    /**
      * CodeGenerator constructor.
      *
-     * @param ConfigProvider $configProvider The configuration provider to retrieve code generation rules.
+     * @param array $validators The validator classes to apply to code generation.
      */
-    public function __construct(ConfigProvider $configProvider)
+    public function __construct(private array $validators)
     {
-        $this->rules = $configProvider->getRules();
+        //
     }
 
     /**
@@ -36,7 +31,7 @@ class CodeGenerator
     {
         do {
             $code = $this->generateRandomCode();
-        } while (!$this->isCodeValid($code, $this->rules));
+        } while (!$this->isCodeValid($code));
 
         return $code;
     }
@@ -55,79 +50,17 @@ class CodeGenerator
      * Check if the generated code is valid according to the constraints.
      *
      * @param string $code
-     * @param array $rules The rules for generating the code.
-     * @return bool
-     */
-    private function isCodeValid(string $code, array $rules): bool
-    {
-        $allowedCharacters      = $rules['allowed_characters'] ?? '0123456789';
-        $characterRepeatedLimit = $rules['character_repeated_limit'] ?? 3;
-        $sequenceLengthLimit    = $rules['sequence_length_limit'] ?? 3;
-        $uniqueCharactersLimit  = $rules['unique_characters_limit'] ?? 3;
-
-        return (
-            $this->isNotPalindrome($code) &&
-            $this->hasNoCharacterRepeatedMoreThanLimit($code, $characterRepeatedLimit) &&
-            $this->hasNoSequenceLengthGreaterThanLimit($code, $sequenceLengthLimit) &&
-            $this->hasAtLeastLimitUniqueCharacters($code, $uniqueCharactersLimit, $allowedCharacters)
-        );
-    }
-
-    /**
-     * Check if the code is not a palindrome.
      *
-     * @param string $code
      * @return bool
      */
-    private function isNotPalindrome(string $code): bool
+    private function isCodeValid(string $code): bool
     {
-        return $code !== strrev($code);
-    }
-
-    /**
-     * Check if the code has no character repeated more than the limit.
-     *
-     * @param string $code
-     * @param int $limit
-     * @return bool
-     */
-    private function hasNoCharacterRepeatedMoreThanLimit(string $code, int $limit): bool
-    {
-        return !preg_match('/(\d)\1{' . ($limit - 1) . ',}/', $code);
-    }
-
-    /**
-     * Check if the code has no sequence length greater than the limit.
-     *
-     * @param string $code
-     * @param int $limit
-     * @return bool
-     */
-    private function hasNoSequenceLengthGreaterThanLimit(string $code, int $limit): bool
-    {
-        return !preg_match('/(\d)\1{' . ($limit - 1) . ',}/', $code);
-    }
-
-    /**
-     * Check if the code has at least the limit number of unique characters from the allowed characters.
-     *
-     * @param string $code
-     * @param int $limit
-     * @param string $allowedCharacters
-     * @return bool
-     */
-    private function hasAtLeastLimitUniqueCharacters(string $code, int $limit, string $allowedCharacters): bool
-    {
-        $allowedCharactersCount = count_chars($allowedCharacters, 1);
-        $codeCharactersCount    = count_chars($code, 1);
-
-        $uniqueCharactersCount = 0;
-        foreach ($codeCharactersCount as $character => $count) {
-            if (isset($allowedCharactersCount[$character])) {
-                $uniqueCharactersCount++;
+        foreach ($this->validators as $validator) {
+            if (!$validator->isValid($code)) {
+              return false;
             }
-        }
-
-        return $uniqueCharactersCount >= $limit;
+          }
+          return true;
     }
+
 }

@@ -5,7 +5,7 @@ namespace Veeqtoh\DoorAccess;
 
 use Illuminate\Support\ServiceProvider;
 
-class DoorAccessServiceProvider extends ServiceProvider
+class DoorAccessProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.

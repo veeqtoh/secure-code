@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veeqtoh\DoorAccess;
 
-use Veeqtoh\DoorAccess\Provider\ConfigProvider;
+use Veeqtoh\DoorAccess\Providers\ConfigProvider;
 
 /**
  * Class CodeGenerator

@@ -26,7 +26,7 @@ Generate a door access code using the `CodeGenerator` class:
 <?php
 
 use Veeqtoh\DoorAccess\CodeGenerator;
-use Veeqtoh\DoorAccess\Provider\ConfigProvider;
+use Veeqtoh\DoorAccess\Providers\ConfigProvider;
 
 // Create an instance of ConfigProvider
 $configProvider = new ConfigProvider();

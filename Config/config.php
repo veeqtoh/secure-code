@@ -3,38 +3,41 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Database Configuration
+    | Custom Database Connection
     |--------------------------------------------------------------------------
     |
-    | Configure the database connection details for storing door access codes.
+    | This configuration value is used to override the database connection
+    | that will be used by models of this package. If set to `null`, your
+    | application's default database connection will be used.
+    |
+    */
+    'connection' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Code Generation Rules
+    |--------------------------------------------------------------------------
+    |
+    | These are the default rules for generating secure door access codes.
+    | You can customize these rules in the configuration file to meet your needs.
     |
     */
 
-    'database' => [
-        'connection' => env('DB_CONNECTION', 'sqlite'), // Change to your preferred database connection
-        'table' => 'door_access_codes', // Table name for storing codes
+    'code_length'              => 6,
+    'character_repeated_limit' => 3,
+    'sequence_length_limit'    => 3,
+    'unique_characters_limit'  => 3,
+    'allowed_characters'       => '0123456789',
 
-        'connections' => [
-            'sqlite' => [
-                'driver' => 'sqlite',
-                'database' => env('DB_DATABASE', database_path('database.sqlite')),
-                'prefix' => '',
-            ],
-
-            'mysql' => [
-                'driver' => 'mysql',
-                'host' => env('DB_HOST', '127.0.0.1'),
-                'port' => env('DB_PORT', '3306'),
-                'database' => env('DB_DATABASE', 'forge'),
-                'username' => env('DB_USERNAME', 'forge'),
-                'password' => env('DB_PASSWORD', ''),
-                'unix_socket' => env('DB_SOCKET', ''),
-                'charset' => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix' => '',
-                'strict' => true,
-                'engine' => null,
-            ],
-        ],
+    /*
+    |--------------------------------------------------------------------------
+    | Eloquent Factories
+    |--------------------------------------------------------------------------
+    |
+    | Define eloquent factories that you will use for your testing purposes.
+    |
+    */
+    'factories' => [
+        \Veeqtoh\DoorAccess\Models\AccessCode::class => \Veeqtoh\DoorAccess\Models\Factories\AccessCodeFactory::class,
     ],
 ];

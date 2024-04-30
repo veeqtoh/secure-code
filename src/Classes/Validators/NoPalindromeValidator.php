@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Veeqtoh\DoorAccess\Classes\Validators;
 
-use Veeqtoh\DoorAccess\Interfaces\CodeValidator;
+use Veeqtoh\DoorAccess\Contracts\CodeValidator;
 
 /**
  * Class NoPalindromeValidator

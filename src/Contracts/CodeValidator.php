@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Interfaces;
+namespace Veeqtoh\DoorAccess\Contracts;
 
 /**
- * Interface CodeValidationRule
+ * Interface CodeValidator
  * @package Veeqtoh\DoorAccess\Contracts
  */
 interface CodeValidator

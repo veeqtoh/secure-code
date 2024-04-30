@@ -7,7 +7,7 @@ namespace Veeqtoh\DoorAccess\Facades;
 use Illuminate\Support\Facades\Facade;
 use RuntimeException;
 
-class ShortURL extends Facade
+class DoorAccess extends Facade
 {
     /**
      * Get the registered name of the component.

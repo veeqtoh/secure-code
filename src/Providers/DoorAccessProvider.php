@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess;
+namespace Veeqtoh\Providers\DoorAccess;
 
 use Illuminate\Support\ServiceProvider;
 

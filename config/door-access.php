@@ -36,7 +36,8 @@ return [
     | Code format
     |--------------------------------------------------------------------------
     |
-    | Define the format of the code. The options are 'numeric', 'alphanumeric' or 'mixed'.
+    | Define the format of the code. The options are
+    | 'numeric', 'alphanumeric' or 'mixed'.
     | The default for numeric format is '0123456789'.
     |
     */
@@ -49,13 +50,27 @@ return [
     |--------------------------------------------------------------------------
     |
     | Define the characters of the generated code.
-    | The code generator dynamically selects the appropriate character set depending on the chosen code format.
+    | The code generator dynamically selects the appropriate
+    | character set depending on the chosen code format.
     |
     */
 
     'numeric_characters'      => '0123456789', // Default for numeric format.
-    'alphanumeric_characters' => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', // Default for alphanumeric format.
-    'mixed_characters'        => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_=+[]{};:<>,.?/', // Combined set.
+    'alphanumeric_characters' => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    'mixed_characters'        => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_=+[]{};:<>,.?/',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Config Validation
+    |--------------------------------------------------------------------------
+    |
+    | Choose whether you want the config to be validated. This
+    | can be useful for ensuring that your config values are
+    | safe to use.
+    |
+    */
+
+    'validate_config' => true,
 
     /*
     |--------------------------------------------------------------------------

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Veeqtoh\DoorAccess\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Veeqtoh\DoorAccess\Classes\Validation;
 
 /**
  * class DoorAccessProvider
@@ -27,16 +28,21 @@ class DoorAccessProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // Publish the package configuration file to the Laravel application.
         $this->publishes([
             __DIR__ . '/../../config/door-access.php' => config_path('door-access.php'),
         ], 'config');
 
-        // Migrate the package's database tables.
+        // Publish the package's migrations.
         $this->publishes([
             __DIR__.'/../../database/migrations' => database_path('migrations'),
         ], 'door-access-migrations');
+
+        // Validate the library configs or not.
+        if (config('door-access') && config('door-access.validate_config')) {
+            (new Validation())->validateConfig();
+        }
     }
 }

@@ -16,7 +16,7 @@ class MinimumUniqueCharactersValidator implements CodeValidator
 {
   public function isValid(string $code): bool
   {
-    $allowedCharactersCount = count_chars(config('allowed_characters') ?? '0123456789', 1);
+    $allowedCharactersCount = count_chars(config('door-access.allowed_characters') ?? '0123456789', 1);
     $codeCharactersCount    = count_chars($code, 1);
 
     $uniqueCharactersCount = 0;
@@ -27,6 +27,6 @@ class MinimumUniqueCharactersValidator implements CodeValidator
       }
     }
 
-    return $uniqueCharactersCount >= config('character_repeated_limit') ?? 3;
+    return $uniqueCharactersCount >= config('door-access.character_repeated_limit') ?? 3;
   }
 }

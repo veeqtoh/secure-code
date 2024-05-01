@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess;
+namespace Veeqtoh\DoorAccess\Classes;
 
 use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
 
@@ -10,7 +10,7 @@ use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
  * Class CodeGenerator
  * The library class that is used for generating unique, secure codes.
  *
- * @package Veeqtoh\DoorAccess
+ * @package Veeqtoh\DoorAccess\Classes
  */
 class CodeGenerator
 {
@@ -21,7 +21,7 @@ class CodeGenerator
      *
      * @param array $validators The validator classes to apply to code generation.
      */
-    public function __construct(private array $validators)
+    public function __construct(private array $validators = [])
     {
         //
     }

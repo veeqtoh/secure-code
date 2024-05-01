@@ -25,7 +25,7 @@ class Validation
             ->throwExceptionOnFailure(false)
             ->runInline([
                 'door-access' => [
-                    Rule::make('code_length')->rules(['required', 'integer', 'min:6', 'max:19']),
+                    Rule::make('code_length')->rules(['required', 'integer', 'min:1', 'max:19']),
                     Rule::make('character_repeated_limit')->rules(['required', 'integer', 'min:3', 'max:19']),
                     Rule::make('sequence_length_limit')->rules(['required', 'integer', 'min:3']),
                     Rule::make('unique_characters_limit')->rules(['required', 'integer', 'min:3']),

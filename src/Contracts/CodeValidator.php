@@ -6,6 +6,8 @@ namespace Veeqtoh\DoorAccess\Contracts;
 
 /**
  * Interface CodeValidator
+ * This interface provides the basis of all validation classes behaviors.
+ *
  * @package Veeqtoh\DoorAccess\Contracts
  */
 interface CodeValidator

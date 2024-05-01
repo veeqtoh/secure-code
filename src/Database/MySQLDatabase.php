@@ -33,7 +33,7 @@ class MySQLDatabase implements DatabaseInterface
      * Retrieve the code associated with the team member from the MySQL database.
      *
      * @param string $teamMemberId
-     * @return string|null
+     * @return ?string
      */
     public function retrieve(string $teamMemberId): ?string
     {

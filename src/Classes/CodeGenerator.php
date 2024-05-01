@@ -8,7 +8,7 @@ use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
 
 /**
  * Class CodeGenerator
- * The library class that is used for generating unique, secure codes.
+ * This class is used for generating unique, secure codes.
  *
  * @package Veeqtoh\DoorAccess\Classes
  */
@@ -27,11 +27,11 @@ class CodeGenerator
     }
 
     /**
-     * Generate a unique 6-digit code.
+     * Generate a unique n-digit code.
      *
-     * @return string|null The generated code or null if code generation fails.
+     * @return ?string The generated code or null if code generation fails.
      */
-    public function generateCode(): ?string
+    public function generate(): ?string
     {
         do {
             $code = $this->generateRandomCode($this->getCodeLength());

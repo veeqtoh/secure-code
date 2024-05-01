@@ -8,7 +8,7 @@ namespace Veeqtoh\DoorAccess\Classes\Traits;
  * Trait ConfigTrait
  * This trait provides methods to retrieve configuration settings for the DoorAccess package.
  *
- * @package Veeqtoh\DoorAccess
+ * @package Veeqtoh\DoorAccess\Classes\Traits
  */
 trait ConfigTrait
 {

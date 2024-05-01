@@ -9,7 +9,7 @@ use Veeqtoh\DoorAccess\Contracts\CodeValidator;
 
 /**
  * Class MinimumUniqueCharactersValidator
- * The library class that is used for validating against minimum unique characters.
+ * This class provides validation against minimum unique characters.
  *
  * @package Veeqtoh\DoorAccess\Classes\Validators
  */

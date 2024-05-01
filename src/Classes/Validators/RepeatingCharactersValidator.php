@@ -9,7 +9,7 @@ use Veeqtoh\DoorAccess\Contracts\CodeValidator;
 
 /**
  * Class RepeatingCharactersValidator
- * The library class that is used for validating against repeated limit.
+ * This class provides validation against repeated limit.
  *
  * @package Veeqtoh\DoorAccess\Classes\Validators
  */

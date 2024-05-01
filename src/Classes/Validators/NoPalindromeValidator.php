@@ -8,7 +8,7 @@ use Veeqtoh\DoorAccess\Contracts\CodeValidator;
 
 /**
  * Class NoPalindromeValidator
- * The library class that is used for validating against palindrome.
+ * This class provides validation against palindrome.
  *
  * @package Veeqtoh\DoorAccess\Classes\Validators
  */

@@ -7,6 +7,12 @@ namespace Veeqtoh\DoorAccess\Facades;
 use Illuminate\Support\Facades\Facade;
 use RuntimeException;
 
+/**
+ * class DoorAccess
+ * This class provides the facade for this library.
+ *
+ * @package Veeqtoh\DoorAccess\Facades
+ */
 class DoorAccess extends Facade
 {
     /**
@@ -16,6 +22,6 @@ class DoorAccess extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'door-access.builder';
+        return 'door-access.code-generator';
     }
 }

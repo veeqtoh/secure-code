@@ -2,17 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess;
+namespace Veeqtoh\DoorAccess\Classes;
 
-use Veeqtoh\DoorAccess\Database\DatabaseInterface;
+use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
 use Veeqtoh\DoorAccess\CodeGenerator;
+use Veeqtoh\DoorAccess\Database\DatabaseInterface;
 
 /**
  * Class CodeManager
- * @package Veeqtoh\DoorAccess
+ * This class is used for managing generated codes.
+ *
+ * @package Veeqtoh\DoorAccess\Classes
  */
 class CodeManager
 {
+    use ConfigTrait;
+
     private CodeGenerator $codeGenerator;
     private DatabaseInterface $database;
 
@@ -26,7 +31,8 @@ class CodeManager
      * Allocate a code to a team member.
      *
      * @param string $teamMemberId
-     * @return string|null
+     *
+     * @return ?string
      */
     public function allocateCode(string $teamMemberId): ?string
     {

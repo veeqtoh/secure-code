@@ -38,7 +38,14 @@ trait ConfigTrait
      */
     public function getCodeLength(): int
     {
-        return config('door-access.code_length') ?? 6;
+        if(
+            config('door-access.code_length')
+            && config('door-access.code_length') > 19
+        ){
+            return 19;
+        } else {
+            return config('door-access.code_length') ?? 6;
+        }
     }
 
     /**
@@ -48,7 +55,14 @@ trait ConfigTrait
      */
     public function getCharacterRepeatedLimit(): int
     {
-        return config('door-access.character_repeated_limit') ?? 3;
+        if(
+            config('door-access.character_repeated_limit')
+            && config('door-access.character_repeated_limit') > $this->getCodeLength()
+        ){
+            return $this->getCodeLength();
+        } else {
+            return config('door-access.character_repeated_limit') ?? 3;
+        }
     }
 
     /**

@@ -11,6 +11,7 @@ return [
     | application's default database connection will be used.
     |
     */
+
     'connection' => null,
 
     /*
@@ -21,13 +22,40 @@ return [
     | These are the default rules for generating secure door access codes.
     | You can customize these rules in the configuration file to meet your needs.
     |
+    | NOTE: Maximum code length is 19.
+    |
     */
 
     'code_length'              => 6,
     'character_repeated_limit' => 3,
     'sequence_length_limit'    => 3,
     'unique_characters_limit'  => 3,
-    'allowed_characters'       => '0123456789',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Code format
+    |--------------------------------------------------------------------------
+    |
+    | Define the format of the code. The options are 'numeric', 'alphanumeric' or 'mixed'.
+    | The default for numeric format is '0123456789'.
+    |
+    */
+
+    'code_format' => 'mixed',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Code characters
+    |--------------------------------------------------------------------------
+    |
+    | Define the characters of the generated code.
+    | The code generator dynamically selects the appropriate character set depending on the chosen code format.
+    |
+    */
+
+    'numeric_characters'      => '0123456789', // Default for numeric format.
+    'alphanumeric_characters' => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', // Default for alphanumeric format.
+    'mixed_characters'        => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_=+[]{};:<>,.?/', // Combined set.
 
     /*
     |--------------------------------------------------------------------------
@@ -37,6 +65,7 @@ return [
     | Define eloquent factories that you will use for your testing purposes.
     |
     */
+
     'factories' => [
         \Veeqtoh\DoorAccess\Models\AccessCode::class => \Veeqtoh\DoorAccess\Models\Factories\AccessCodeFactory::class,
     ],

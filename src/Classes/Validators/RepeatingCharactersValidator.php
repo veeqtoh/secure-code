@@ -16,6 +16,7 @@ class RepeatingCharactersValidator implements CodeValidator
 {
   public function isValid(string $code): bool
   {
-    return !preg_match('/(.)\1{' . (config('door-access.sequence_length_limit') ?? '3' - 1) . ',}/', $code);
+      return !preg_match('/(.)\1{' . ($this->getSequenceLengthLimit() - 1) . ',}/', $code);
   }
+
 }

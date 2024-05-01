@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Veeqtoh\DoorAccess;
 
+use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
+
 /**
  * Class CodeGenerator
  * The library class that is used for generating unique, secure codes.
@@ -12,6 +14,8 @@ namespace Veeqtoh\DoorAccess;
  */
 class CodeGenerator
 {
+    use ConfigTrait;
+
     /**
      * CodeGenerator constructor.
      *
@@ -30,7 +34,7 @@ class CodeGenerator
     public function generateCode(): ?string
     {
         do {
-            $code = $this->generateRandomCode();
+            $code = $this->generateRandomCode($this->getCodeLength());
         } while (!$this->isCodeValid($code));
 
         return $code;
@@ -41,9 +45,25 @@ class CodeGenerator
      *
      * @return string
      */
-    private function generateRandomCode(): string
+    private function generateRandomCode(int $length): string
     {
-        return (string) random_int(100000, 999999);
+        $allowedCharacters = $this->getAllowedCharacters();
+
+        if ($this->getCodeFormat() === 'numeric') {
+            $min = (int) pow(10, $length - 1);
+            $max = (int) pow(10, $length) - 1;
+
+            return (string) random_int($min, $max);
+        } else {
+            // Handle other formats (e.g., alphanumeric, mixed characters).
+            $randomString = '';
+
+            for ($i = 0; $i < $length; $i++) {
+                $randomIndex   = random_int(0, mb_strlen($allowedCharacters) - 1);
+                $randomString .= $allowedCharacters[$randomIndex];
+            }
+            return $randomString;
+        }
     }
 
     /**

@@ -16,17 +16,18 @@ class MinimumUniqueCharactersValidator implements CodeValidator
 {
   public function isValid(string $code): bool
   {
-    $allowedCharactersCount = count_chars(config('door-access.allowed_characters') ?? '0123456789', 1);
-    $codeCharactersCount    = count_chars($code, 1);
+      $allowedCharactersCount = count_chars($this->getAllowedCharacters(), 1);
+      $codeCharactersCount    = count_chars($code, 1);
 
-    $uniqueCharactersCount = 0;
+      $uniqueCharactersCount = 0;
 
-    foreach ($codeCharactersCount as $character => $count) {
-      if (isset($allowedCharactersCount[$character])) {
-        $uniqueCharactersCount++;
+      foreach ($codeCharactersCount as $character => $count) {
+          if (isset($allowedCharactersCount[$character])) {
+              $uniqueCharactersCount++;
+          }
       }
-    }
 
-    return $uniqueCharactersCount >= config('door-access.character_repeated_limit') ?? 3;
+      return $uniqueCharactersCount >= $this->getCharacterRepeatedLimit();
   }
+
 }

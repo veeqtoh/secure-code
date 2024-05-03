@@ -11,10 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('door_access_codes', function (Blueprint $table) {
-            $table->id();
-            $table->string('code')->unique();
-            $table->string('team_member_id')->nullable();
+        Schema::connection(config('door-access.connection'))->create('access_codes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('code')->unique()->when(
+                Schema::getConnection()->getConfig('driver') === 'mysql',
+                function (Blueprint $column) {
+                    $column->collation('utf8mb4_bin');
+                }
+            );
+            $table->string('owner_id')->nullable();
+            $table->timestamp('allocated_at')->nullable();
+            $table->timestamp('reset_at')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('door_access_codes');
+        Schema::connection(config('door-access.connection'))->dropIfExists('access_codes');
     }
 };

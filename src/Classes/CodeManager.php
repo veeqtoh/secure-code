@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Veeqtoh\DoorAccess\Classes;
 
+use Illuminate\Support\Facades\Log;
 use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
-use Veeqtoh\DoorAccess\CodeGenerator;
-use Veeqtoh\DoorAccess\Database\DatabaseInterface;
+use Veeqtoh\DoorAccess\Exceptions\InvalidCodeException;
+use Veeqtoh\DoorAccess\Models\AccessCode;
 
 /**
  * Class CodeManager
@@ -18,55 +19,81 @@ class CodeManager
 {
     use ConfigTrait;
 
-    private CodeGenerator $codeGenerator;
-    private DatabaseInterface $database;
-
-    public function __construct(CodeGenerator $codeGenerator, DatabaseInterface $database)
+    /**
+     * Save the access code in the database.
+     *
+     * @param string $code The access code to be saved.
+     *
+     * @return AccessCode The newly created AccessCode model.
+     */
+    public function saveCode(string $code): ?AccessCode
     {
-        $this->codeGenerator = $codeGenerator;
-        $this->database = $database;
+        return AccessCode::create(['code' => $code]);
     }
 
     /**
-     * Allocate a code to a team member.
+     * Allocate a code to an owner.
      *
-     * @param string $teamMemberId
+     * @param string $code    The generated code to be allocated.
+     * @param string $ownerId The owner to be allocated the code.
      *
-     * @return ?string
+     * @return AccessCode The AccessCode model with the new allocation.
      */
-    public function allocateCode(string $teamMemberId): ?string
+    public function allocateCode(string $code, string $ownerId): AccessCode
     {
-        // Check if a code is already allocated to the team member in the database
-        $existingCode = $this->database->retrieve($teamMemberId);
+        $existingCode = AccessCode::whereCode($code)->first();
 
         if ($existingCode) {
-            return $existingCode;
+            if ($existingCode->isAllocated()) {
+                $existingCode->reset();
+            }
+
+            return $existingCode->allocate($ownerId);
         }
 
-        $code = $this->codeGenerator->generateCode();
-
-        // Store the generated code for the team member in the database
-        $this->database->store($teamMemberId, $code);
-
-        return $code;
+        return AccessCode::create([
+            'code'     => $code,
+            'owner_id' => $ownerId
+        ]);
     }
 
     /**
      * Reset a code and make it available for reallocation.
      *
-     * @param string $code
-     * @return bool
+     * @param string $code,
+     *
+     * @return AccessCode The AccessCode model with the new allocation.
+     *
+     * @throws InvalidCodeException When code to be reset is not found.
      */
-    public function resetCode(string $code): bool
+    public function resetCode(string $code): AccessCode
     {
-        // Find the team member ID associated with the code in the database
-        $teamMemberId = $this->database->retrieveTeamMemberId($code);
+        $existingCode = AccessCode::whereCode($code)->first();
 
-        if ($teamMemberId) {
-            // Remove the code from the database
-            return $this->database->delete($code);
+        if (!$existingCode) {
+            Log::error("The code ({$code}) you are trying to reset does not exist");
+            throw new InvalidCodeException("The code ({$code}) you are trying to reset does not exist", 1);
         }
 
-        return false;
+        return $existingCode->reset();
+    }
+
+    /**
+     * Destroy the access code in the database.
+     *
+     * @param string $code The access code to be destroyed.
+     *
+     * @return bool Returns true if the access code was successfully destroyed, false otherwise.
+     */
+    public function destroyCode(string $code): bool
+    {
+        $existingCode = AccessCode::whereCode($code)->first();
+
+        if (!$existingCode) {
+            Log::error("The code ({$code}) you are trying to destroy does not exist");
+            throw new InvalidCodeException("The code ({$code}) you are trying to destroy does not exist", 1);
+        }
+
+        return $existingCode->delete();
     }
 }

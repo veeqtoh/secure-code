@@ -35,6 +35,7 @@ class AccessCode extends Model
      * @var array<int,string>
      */
     protected $fillable = [
+        'code',
         'owner_id',
         'allocated_at',
         'reset_at',
@@ -77,7 +78,7 @@ class AccessCode extends Model
      */
     public static function findByCode(string $code): ?self
     {
-        return self::where('code', $code)->first();
+        return self::whereCode($code)->first();
     }
 
     /**
@@ -90,4 +91,48 @@ class AccessCode extends Model
     {
         return self::where('owner_id', $ownerId)->get();
     }
+
+    /**
+     * Check if the access code is currently allocated.
+     *
+     * @return bool Returns true if the access code is allocated, false otherwise.
+     */
+    public function isAllocated(): bool
+    {
+        return isset($this->allocated_at);
+    }
+
+    /**
+     * Reset the access code, making it available for reallocation.
+     *
+     * @return self Returns the AccessCode model with the new allocation.
+     */
+    public function reset(): self
+    {
+        $this->update([
+            'owner_id'     => null,
+            'allocated_at' => null,
+            'reset_at'     => now(),
+        ]);
+
+        return $this->fresh();
+    }
+
+    /**
+     * Allocate the access code to an owner.
+     *
+     * @param string $ownerId The id of the owner to whom the access code will be allocated.
+     *
+     * @return self Returns the AccessCode model with the new allocation.
+     */
+    public function allocate(string $ownerId): self
+    {
+        $this->update([
+            'owner_id'     => $ownerId,
+            'allocated_at' => now(),
+        ]);
+
+        return $this->fresh();
+    }
+
 }

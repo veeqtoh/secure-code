@@ -8,7 +8,7 @@
 <a href="https://packagist.org/packages/veeqtoh/secure-code"><img src="https://img.shields.io/packagist/v/veeqtoh/secure-code.svg?style=flat-square" alt="Latest Version on Packagist"></a>
 <a href="https://packagist.org/packages/veeqtoh/secure-code"><img src="https://img.shields.io/packagist/dt/veeqtoh/secure-code.svg?style=flat-square" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/veeqtoh/secure-code"><img src="https://img.shields.io/packagist/php-v/veeqtoh/secure-code?style=flat-square" alt="PHP from Packagist"></a>
-<a href="https://github.com/veeqtoh/secure-code/blob/master/LICENSE"><img src="https://img.shields.io/github/license/veeqtoh/secure-code?style=flat-square" alt="GitHub license"></a>
+<a href="https://github.com/veeqtoh/secure-code/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/veeqtoh/secure-code?style=flat-square" alt="GitHub license"></a>
 </p>
 
 ## Table of Contents

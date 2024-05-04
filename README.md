@@ -1,7 +1,7 @@
 # secure-code
 
 <p align="center">
-<img src="https://victorukam.com/assets/images/secure-code.jpeg" width="400">
+<img src="https://victorukam.com/assets/images/secure-code.png" width="400">
 </p>
 
 <p align="center">

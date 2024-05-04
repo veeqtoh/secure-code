@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Classes\Validators;
+namespace Veeqtoh\SecureCode\Classes\Validators;
 
-use Veeqtoh\DoorAccess\Contracts\CodeValidator;
+use Veeqtoh\SecureCode\Contracts\CodeValidator;
 
 /**
  * Class NoPalindromeValidator
  * This class provides validation against palindrome.
  *
- * @package Veeqtoh\DoorAccess\Classes\Validators
+ * @package Veeqtoh\SecureCode\Classes\Validators
  */
 class NoPalindromeValidator implements CodeValidator
 {

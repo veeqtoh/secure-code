@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Facades;
+namespace Veeqtoh\SecureCode\Facades;
 
 use Illuminate\Support\Facades\Facade;
 use RuntimeException;
 
 /**
- * class DoorAccess
+ * class SecureCode
  * This class provides the facade for this library.
  *
- * @package Veeqtoh\DoorAccess\Facades
+ * @package Veeqtoh\SecureCode\Facades
  */
-class DoorAccess extends Facade
+class SecureCode extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -22,6 +22,6 @@ class DoorAccess extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return 'door-access.code-generator';
+        return 'secure-code.code-generator';
     }
 }

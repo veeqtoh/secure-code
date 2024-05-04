@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Classes\Validators;
+namespace Veeqtoh\SecureCode\Classes\Validators;
 
-use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
-use Veeqtoh\DoorAccess\Contracts\CodeValidator;
+use Veeqtoh\SecureCode\Classes\Traits\ConfigTrait;
+use Veeqtoh\SecureCode\Contracts\CodeValidator;
 
 /**
  * Class MinimumUniqueCharactersValidator
  * This class provides validation against minimum unique characters.
  *
- * @package Veeqtoh\DoorAccess\Classes\Validators
+ * @package Veeqtoh\SecureCode\Classes\Validators
  */
 class MinimumUniqueCharactersValidator implements CodeValidator
 {

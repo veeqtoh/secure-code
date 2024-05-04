@@ -5,5 +5,5 @@ test('globals')
     ->toBeUsedInNothing();
 
 test('all classes use strict types')
-    ->expect('Veeqtoh\DoorAccess')
+    ->expect('Veeqtoh\SecureCode')
     ->toUseStrictTypes();

@@ -1,8 +1,8 @@
 {
-    "name": "veeqtoh/door-access",
-    "description": "A Laravel package for creating secure door access systems, providing unique and random 6-digit codes for team members.",
+    "name": "veeqtoh/secure-code",
+    "description": "A Laravel package for creating secure codes, providing unique and random n-digit codes for any use.",
     "type": "library",
-    "homepage": "https://github.com/veeqtoh/door-access",
+    "homepage": "https://github.com/veeqtoh/secure-code",
     "license": "MIT",
     "authors": [
         {
@@ -13,8 +13,9 @@
     "keywords": [
         "veeqtoh",
         "victor-ukam",
-        "door-access",
+        "secure-code",
         "secure-access",
+        "secure-code",
         "unique-codes",
         "persistent-codes",
         "random-code-allocation",
@@ -43,21 +44,21 @@
     },
     "autoload": {
         "psr-4": {
-            "Veeqtoh\\DoorAccess\\": "src/"
+            "Veeqtoh\\SecureCode\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Veeqtoh\\DoorAccess\\Tests\\": "tests/"
+            "Veeqtoh\\SecureCode\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Veeqtoh\\DoorAccess\\Providers\\DoorAccessProvider"
+                "Veeqtoh\\SecureCode\\Providers\\SecureCodeProvider"
             ],
             "aliases": {
-                "DoorAccess": "Veeqtoh\\DoorAccess\\Facades\\DoorAccess"
+                "SecureCode": "Veeqtoh\\SecureCode\\Facades\\SecureCode"
             }
         }
     },

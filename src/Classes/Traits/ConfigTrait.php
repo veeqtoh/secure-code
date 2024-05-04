@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Classes\Traits;
+namespace Veeqtoh\SecureCode\Classes\Traits;
 
 /**
  * Trait ConfigTrait
- * This trait provides methods to retrieve configuration settings for the DoorAccess package.
+ * This trait provides methods to retrieve configuration settings for the SecureCode package.
  *
- * @package Veeqtoh\DoorAccess\Classes\Traits
+ * @package Veeqtoh\SecureCode\Classes\Traits
  */
 trait ConfigTrait
 {
@@ -19,15 +19,15 @@ trait ConfigTrait
      */
     public function getAllowedCharacters(): string
     {
-        $format = config('door-access.code_format');
+        $format = config('secure-code.code_format');
 
         switch ($format) {
             case 'numeric':
-                return config('door-access.numeric_characters') ?? '0123456789';
+                return config('secure-code.numeric_characters') ?? '0123456789';
             case 'mixed':
-                return config('door-access.mixed_characters') ?? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_=+[]{};:<>,.?/';
+                return config('secure-code.mixed_characters') ?? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_=+[]{};:<>,.?/';
             default:
-                return config('door-access.alphanumeric_characters') ?? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                return config('secure-code.alphanumeric_characters') ?? '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         }
     }
 
@@ -39,12 +39,12 @@ trait ConfigTrait
     public function getCodeLength(): int
     {
         if(
-            config('door-access.code_length')
-            && config('door-access.code_length') > 19
+            config('secure-code.code_length')
+            && config('secure-code.code_length') > 19
         ){
             return 19;
         } else {
-            return config('door-access.code_length') ?? 6;
+            return config('secure-code.code_length') ?? 6;
         }
     }
 
@@ -56,12 +56,12 @@ trait ConfigTrait
     public function getCharacterRepeatedLimit(): int
     {
         if(
-            config('door-access.character_repeated_limit')
-            && config('door-access.character_repeated_limit') > $this->getCodeLength()
+            config('secure-code.character_repeated_limit')
+            && config('secure-code.character_repeated_limit') > $this->getCodeLength()
         ){
             return $this->getCodeLength();
         } else {
-            return config('door-access.character_repeated_limit') ?? 3;
+            return config('secure-code.character_repeated_limit') ?? 3;
         }
     }
 
@@ -72,7 +72,7 @@ trait ConfigTrait
      */
     public function getSequenceLengthLimit(): int
     {
-        return config('door-access.sequence_length_limit') ?? 3;
+        return config('secure-code.sequence_length_limit') ?? 3;
     }
 
     /**
@@ -82,7 +82,7 @@ trait ConfigTrait
      */
     public function getUniqueCharactersLimit(): int
     {
-        return config('door-access.unique_characters_limit') ?? 6;
+        return config('secure-code.unique_characters_limit') ?? 6;
     }
 
     /**
@@ -92,7 +92,7 @@ trait ConfigTrait
      */
     public function getCodeFormat(): string
     {
-        return config('door-access.code_format') ?? 'numeric';
+        return config('secure-code.code_format') ?? 'numeric';
     }
 }
 

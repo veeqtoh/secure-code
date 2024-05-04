@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Tests\Unit\Models\AccessCode;
+namespace Veeqtoh\SecureCode\Tests\Unit\Models\SecureCode;
 
 use Carbon\Carbon;
 use PHPUnit\Framework\Attributes\Test;
-use Veeqtoh\DoorAccess\Models\AccessCode;
-use Veeqtoh\DoorAccess\Tests\Unit\TestCase;
+use Veeqtoh\SecureCode\Models\SecureCode;
+use Veeqtoh\SecureCode\Tests\Unit\TestCase;
 
 final class CastsTest extends TestCase
 {
     #[Test]
     public function carbon_date_objects_are_returned(): void
     {
-        $accessCode = AccessCode::factory()
+        $secureCode = SecureCode::factory()
             ->create([
                 'allocated_at' => now(),
                 'reset_at'     => now(),
@@ -22,11 +22,11 @@ final class CastsTest extends TestCase
                 'updated_at'   => now(),
             ]);
 
-        $accessCode->refresh();
+        $secureCode->refresh();
 
-        $this->assertInstanceOf(Carbon::class, $accessCode->allocated_at);
-        $this->assertInstanceOf(Carbon::class, $accessCode->reset_at);
-        $this->assertInstanceOf(Carbon::class, $accessCode->created_at);
-        $this->assertInstanceOf(Carbon::class, $accessCode->updated_at);
+        $this->assertInstanceOf(Carbon::class, $secureCode->allocated_at);
+        $this->assertInstanceOf(Carbon::class, $secureCode->reset_at);
+        $this->assertInstanceOf(Carbon::class, $secureCode->created_at);
+        $this->assertInstanceOf(Carbon::class, $secureCode->updated_at);
     }
 }

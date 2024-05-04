@@ -2,33 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Classes;
+namespace Veeqtoh\SecureCode\Classes;
 
 use Illuminate\Support\Facades\Log;
-use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
-use Veeqtoh\DoorAccess\Exceptions\InvalidCodeException;
-use Veeqtoh\DoorAccess\Models\AccessCode;
+use Veeqtoh\SecureCode\Classes\Traits\ConfigTrait;
+use Veeqtoh\SecureCode\Exceptions\InvalidCodeException;
+use Veeqtoh\SecureCode\Models\SecureCode;
 
 /**
  * Class CodeManager
  * This class is used for managing generated codes.
  *
- * @package Veeqtoh\DoorAccess\Classes
+ * @package Veeqtoh\SecureCode\Classes
  */
 class CodeManager
 {
     use ConfigTrait;
 
     /**
-     * Save the access code in the database.
+     * Save the secure code in the database.
      *
-     * @param string $code The access code to be saved.
+     * @param string $code The secure code to be saved.
      *
-     * @return AccessCode The newly created AccessCode model.
+     * @return secureCode The newly created secureCode model.
      */
-    public function saveCode(string $code): ?AccessCode
+    public function saveCode(string $code): ?secureCode
     {
-        return AccessCode::create(['code' => $code]);
+        return SecureCode::create(['code' => $code]);
     }
 
     /**
@@ -37,11 +37,11 @@ class CodeManager
      * @param string $code    The generated code to be allocated.
      * @param string $ownerId The owner to be allocated the code.
      *
-     * @return AccessCode The AccessCode model with the new allocation.
+     * @return secureCode The secureCode model with the new allocation.
      */
-    public function allocateCode(string $code, string $ownerId): AccessCode
+    public function allocateCode(string $code, string $ownerId): secureCode
     {
-        $existingCode = AccessCode::whereCode($code)->first();
+        $existingCode = SecureCode::whereCode($code)->first();
 
         if ($existingCode) {
             if ($existingCode->isAllocated()) {
@@ -51,7 +51,7 @@ class CodeManager
             return $existingCode->allocate($ownerId);
         }
 
-        return AccessCode::create([
+        return SecureCode::create([
             'code'     => $code,
             'owner_id' => $ownerId
         ]);
@@ -62,13 +62,13 @@ class CodeManager
      *
      * @param string $code,
      *
-     * @return AccessCode The AccessCode model with the new allocation.
+     * @return secureCode The secureCode model with the new allocation.
      *
      * @throws InvalidCodeException When code to be reset is not found.
      */
-    public function resetCode(string $code): AccessCode
+    public function resetCode(string $code): secureCode
     {
-        $existingCode = AccessCode::whereCode($code)->first();
+        $existingCode = SecureCode::whereCode($code)->first();
 
         if (!$existingCode) {
             Log::error("The code ({$code}) you are trying to reset does not exist");
@@ -79,15 +79,15 @@ class CodeManager
     }
 
     /**
-     * Destroy the access code in the database.
+     * Destroy the secure code in the database.
      *
-     * @param string $code The access code to be destroyed.
+     * @param string $code The secure code to be destroyed.
      *
-     * @return bool Returns true if the access code was successfully destroyed, false otherwise.
+     * @return bool Returns true if the secure code was successfully destroyed, false otherwise.
      */
     public function destroyCode(string $code): bool
     {
-        $existingCode = AccessCode::whereCode($code)->first();
+        $existingCode = SecureCode::whereCode($code)->first();
 
         if (!$existingCode) {
             Log::error("The code ({$code}) you are trying to destroy does not exist");

@@ -1,13 +1,13 @@
 <?php
 
-namespace Veeqtoh\DoorAccess\Tests\Unit\Classes;
+namespace Veeqtoh\SecureCode\Tests\Unit\Classes;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Log;
-use Veeqtoh\DoorAccess\Classes\CodeManager;
-use Veeqtoh\DoorAccess\Exceptions\InvalidCodeException;
-use Veeqtoh\DoorAccess\Models\AccessCode;
-use Veeqtoh\DoorAccess\Tests\Unit\TestCase;
+use Veeqtoh\SecureCode\Classes\CodeManager;
+use Veeqtoh\SecureCode\Exceptions\InvalidCodeException;
+use Veeqtoh\SecureCode\Models\SecureCode;
+use Veeqtoh\SecureCode\Tests\Unit\TestCase;
 
 class CodeManagerTest extends TestCase
 {
@@ -18,34 +18,34 @@ class CodeManagerTest extends TestCase
     {
         $codeManager = new CodeManager();
         $code = '123456';
-        $accessCode = $codeManager->saveCode($code);
+        $secureCode = $codeManager->saveCode($code);
 
-        $this->assertInstanceOf(AccessCode::class, $accessCode);
-        $this->assertEquals($code, $accessCode->code);
+        $this->assertInstanceOf(SecureCode::class, $secureCode);
+        $this->assertEquals($code, $secureCode->code);
     }
 
     #[Test]
     public function testAllocateCode(): void
     {
-        AccessCode::factory()->create(['code' => '123456', 'owner_id' => null]);
+        SecureCode::factory()->create(['code' => '123456', 'owner_id' => null]);
 
         $codeManager = new CodeManager();
         $ownerId = 'user_123';
-        $accessCode = $codeManager->allocateCode('123456', $ownerId);
+        $secureCode = $codeManager->allocateCode('123456', $ownerId);
 
-        $this->assertInstanceOf(AccessCode::class, $accessCode);
-        $this->assertEquals($ownerId, $accessCode->owner_id);
+        $this->assertInstanceOf(SecureCode::class, $secureCode);
+        $this->assertEquals($ownerId, $secureCode->owner_id);
     }
 
     public function testResetCode(): void
     {
-        AccessCode::factory()->create(['code' => '123456']);
+        SecureCode::factory()->create(['code' => '123456']);
 
         $codeManager = new CodeManager();
         $code = '123456';
         $result = $codeManager->resetCode($code);
 
-        $this->assertNull(AccessCode::where('code', $code)->first()->owner_id);
+        $this->assertNull(SecureCode::where('code', $code)->first()->owner_id);
     }
 
     public function testResetCodeWithNonExistingCode(): void
@@ -59,14 +59,14 @@ class CodeManagerTest extends TestCase
 
     public function testDestroyCode(): void
     {
-        AccessCode::factory()->create(['code' => '123456']);
+        SecureCode::factory()->create(['code' => '123456']);
 
         $codeManager = new CodeManager();
         $code = '123456';
         $result = $codeManager->destroyCode($code);
 
         $this->assertTrue($result);
-        $this->assertNull(AccessCode::where('code', $code)->first());
+        $this->assertNull(SecureCode::where('code', $code)->first());
     }
 
     public function testDestroyCodeNonExistingCode(): void

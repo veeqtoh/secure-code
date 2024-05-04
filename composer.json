@@ -1,41 +1,74 @@
 {
     "name": "veeqtoh/door-access",
-    "description": "Secure door access system for Acme Ltd, providing unique and random 6-digit codes for team members, adhering to strict security criteria and efficient code management.",
+    "description": "A Laravel package for creating secure door access systems, providing unique and random 6-digit codes for team members.",
     "type": "library",
-    "scripts": {
-        "test": "vendor/bin/phpunit tests"
-    },
-    "require": {
-        "php": "^8.1.2",
-        "laravel/framework": "^8.0",
-        "ramsey/uuid": "^4.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.0",
-        "mockery/mockery": "^1.0",
-        "filp/whoops": "^2.0",
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "squizlabs/php_codesniffer": "^3.6",
-        "phpunit/php-code-coverage": "^9.0"
-    },
+    "homepage": "https://github.com/veeqtoh/door-access",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Veeqtoh\\DoorAccess\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "Victor Ukam",
             "email": "victorjohnukam@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "keywords": [
+        "veeqtoh",
+        "victor-ukam",
+        "door-access",
+        "secure-access",
+        "unique-codes",
+        "persistent-codes",
+        "random-code-allocation",
+        "clock-in",
+        "clock-out",
+        "palindrome",
+        "repeated characters",
+        "unique characters",
+        "laravel",
+        "laravel-package"
+    ],
+    "require": {
+        "php": "^8.1",
+        "nesbot/carbon": "^2.0|^3.0",
+        "illuminate/container": "^10.0|^11.0",
+        "illuminate/database": "^10.0|^11.0",
+        "ramsey/uuid": "^4.0",
+        "ashallendesign/laravel-config-validator": "^2.6.1"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "orchestra/testbench": "^8.0|^9.0",
+        "phpunit/phpunit": "^10.0|^11.0",
+        "larastan/larastan": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Veeqtoh\\DoorAccess\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Veeqtoh\\DoorAccess\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "Veeqtoh\\DoorAccess\\DoorAccessServiceProvider"
-            ]
+                "Veeqtoh\\DoorAccess\\Providers\\DoorAccessProvider"
+            ],
+            "aliases": {
+                "DoorAccess": "Veeqtoh\\DoorAccess\\Facades\\DoorAccess"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }

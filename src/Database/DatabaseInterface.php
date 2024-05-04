@@ -23,7 +23,7 @@ interface DatabaseInterface
      * Retrieve the code associated with the team member from the database.
      *
      * @param string $teamMemberId
-     * @return string|null
+     * @return ?string
      */
     public function retrieve(string $teamMemberId): ?string;
 

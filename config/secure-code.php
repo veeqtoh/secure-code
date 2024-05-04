@@ -19,7 +19,7 @@ return [
     | Code Generation Rules
     |--------------------------------------------------------------------------
     |
-    | These are the default rules for generating secure door access codes.
+    | These are the default rules for generating secure codes.
     | You can customize these rules in the configuration file to meet your needs.
     |
     | NOTE: Maximum code length is 19.
@@ -82,6 +82,6 @@ return [
     */
 
     'factories' => [
-        \Veeqtoh\DoorAccess\Models\AccessCode::class => \Veeqtoh\DoorAccess\Models\Factories\AccessCodeFactory::class,
+        \Veeqtoh\SecureCode\Models\SecureCode::class => \Veeqtoh\SecureCode\Models\Factories\SecureCodeFactory::class,
     ],
 ];

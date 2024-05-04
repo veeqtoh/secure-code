@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Providers;
+namespace Veeqtoh\SecureCode\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Veeqtoh\DoorAccess\Classes\Validation;
+use Veeqtoh\SecureCode\Classes\Validation;
 
 /**
- * class DoorAccessProvider
+ * class SecureCodeProvider
  * This class registers the package within Laravel.
  *
- * @package Veeqtoh\DoorAccess\Providers
+ * @package Veeqtoh\SecureCode\Providers
  */
-class DoorAccessProvider extends ServiceProvider
+class SecureCodeProvider extends ServiceProvider
 {
     /**
      * Register the application services.
@@ -20,7 +20,7 @@ class DoorAccessProvider extends ServiceProvider
     public function register(): void
     {
         // Merge the package configuration with the Laravel application's configuration.
-        $this->mergeConfigFrom(__DIR__ . '/../../config/door-access.php', 'door-access');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/secure-code.php', 'secure-code');
 
     }
     /**
@@ -32,16 +32,16 @@ class DoorAccessProvider extends ServiceProvider
     {
         // Publish the package configuration file to the Laravel application.
         $this->publishes([
-            __DIR__ . '/../../config/door-access.php' => config_path('door-access.php'),
+            __DIR__ . '/../../config/secure-code.php' => config_path('secure-code.php'),
         ], 'config');
 
         // Publish the package's migrations.
         $this->publishes([
             __DIR__.'/../../database/migrations' => database_path('migrations'),
-        ], 'door-access-migrations');
+        ], 'secure-code-migrations');
 
         // Validate the library configs or not.
-        if (config('door-access') && config('door-access.validate_config')) {
+        if (config('secure-code') && config('secure-code.validate_config')) {
             (new Validation())->validateConfig();
         }
     }

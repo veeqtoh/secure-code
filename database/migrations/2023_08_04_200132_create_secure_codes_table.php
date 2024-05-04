@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('door-access.connection'))->create('access_codes', function (Blueprint $table) {
+        Schema::connection(config('secure-code.connection'))->create('secure_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->unique()->when(
                 Schema::getConnection()->getConfig('driver') === 'mysql',
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('door-access.connection'))->dropIfExists('access_codes');
+        Schema::connection(config('secure-codes.connection'))->dropIfExists('secure_codes');
     }
 };

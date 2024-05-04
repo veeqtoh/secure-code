@@ -1,6 +1,6 @@
 <?php
 
 test('exceptions extend the base exception class')
-    ->expect('Veeqtoh\DoorAccess\Exceptions')
+    ->expect('Veeqtoh\SecureCode\Exceptions')
     ->classes()
     ->toExtend(Exception::class);

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Contracts;
+namespace Veeqtoh\SecureCode\Contracts;
 
 /**
  * Interface CodeValidator
  * This interface provides the basis of all validation classes behaviors.
  *
- * @package Veeqtoh\DoorAccess\Contracts
+ * @package Veeqtoh\SecureCode\Contracts
  */
 interface CodeValidator
 {

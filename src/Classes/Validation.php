@@ -2,13 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Classes;
+namespace Veeqtoh\SecureCode\Classes;
 
 use AshAllenDesign\ConfigValidator\Exceptions\InvalidConfigValueException;
 use AshAllenDesign\ConfigValidator\Services\ConfigValidator;
 use AshAllenDesign\ConfigValidator\Services\Rule;
-use Veeqtoh\DoorAccess\Exceptions\ValidationException;
+use Veeqtoh\SecureCode\Exceptions\ValidationException;
 
+/**
+ * Class Validation
+ * This class is used for validating the config values.
+ *
+ * @package Veeqtoh\SecureCode\Classes
+ */
 class Validation
 {
     /**
@@ -24,7 +30,7 @@ class Validation
         $passes = $validator
             ->throwExceptionOnFailure(false)
             ->runInline([
-                'door-access' => [
+                'secure-code' => [
                     Rule::make('code_length')->rules(['required', 'integer', 'min:1', 'max:19']),
                     Rule::make('character_repeated_limit')->rules(['required', 'integer', 'min:3', 'max:19']),
                     Rule::make('sequence_length_limit')->rules(['required', 'integer', 'min:3']),

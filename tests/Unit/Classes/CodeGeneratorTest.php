@@ -1,17 +1,17 @@
 <?php
 
-namespace Veeqtoh\DoorAccess\Tests\Unit\Classes;
+namespace Veeqtoh\SecureCode\Tests\Unit\Classes;
 
-use Veeqtoh\DoorAccess\Classes\CodeGenerator;
-use Veeqtoh\DoorAccess\Contracts\CodeValidator;
-use Veeqtoh\DoorAccess\Tests\Unit\TestCase;
+use Veeqtoh\SecureCode\Classes\CodeGenerator;
+use Veeqtoh\SecureCode\Contracts\CodeValidator;
+use Veeqtoh\SecureCode\Tests\Unit\TestCase;
 
 class CodeGeneratorTest extends TestCase
 {
     public function testGenerateNumericCode(): void
     {
         // Set code format to alphanumeric.
-        config(['door-access.code_format' => 'numeric']);
+        config(['secure-code.code_format' => 'numeric']);
 
         $generator = new CodeGenerator();
         $code      = $generator->generate();
@@ -23,7 +23,7 @@ class CodeGeneratorTest extends TestCase
     public function testGenerateAlphanumericCode(): void
     {
         // Set code format to alphanumeric.
-        config(['door-access.code_format' => 'alphanumeric']);
+        config(['secure-code.code_format' => 'alphanumeric']);
 
         $generator = new CodeGenerator();
         $code      = $generator->generate();
@@ -35,7 +35,7 @@ class CodeGeneratorTest extends TestCase
     public function testGenerateMixedCode(): void
     {
         // Set code format to mixed.
-        config(['door-access.code_format' => 'mixed']);
+        config(['secure-code.code_format' => 'mixed']);
 
         $generator = new CodeGenerator();
         $code      = $generator->generate();

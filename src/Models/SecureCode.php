@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Models;
+namespace Veeqtoh\SecureCode\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class AccessCode extends Model
+class SecureCode extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class AccessCode extends Model
      *
      * @var string
      */
-    protected $table = 'access_codes';
+    protected $table = 'secure_codes';
 
     /**
      * The attributes that are mass assignable.
@@ -55,17 +55,17 @@ class AccessCode extends Model
     {
         parent::__construct($attributes);
 
-        if (config('door-access.connection')) {
-            $this->setConnection(config('door-access.connection'));
+        if (config('secure-code.connection')) {
+            $this->setConnection(config('secure-code.connection'));
         }
     }
 
     /**
-     * @return Factory<AccessCode>
+     * @return Factory<SecureCode>
      */
     protected static function newFactory()
     {
-        $factoryConfig = config('door-access.factories');
+        $factoryConfig = config('secure-code.factories');
 
         $modelFactory = app($factoryConfig[__CLASS__]);
 
@@ -73,7 +73,7 @@ class AccessCode extends Model
     }
 
     /**
-     * A helper method that can be used for finding a AccessCode model with the
+     * A helper method that can be used for finding a secureCode model with the
      * given code key.
      */
     public static function findByCode(string $code): ?self
@@ -82,10 +82,10 @@ class AccessCode extends Model
     }
 
     /**
-     * A helper method that can be used for finding all the AccessCode models
+     * A helper method that can be used for finding all the secureCode models
      * with the given owner id.
      *
-     * @return Collection<int, AccessCode>
+     * @return Collection<int, SecureCode>
      */
     public static function findByOwnerId(string $ownerId): Collection
     {
@@ -93,9 +93,9 @@ class AccessCode extends Model
     }
 
     /**
-     * Check if the access code is currently allocated.
+     * Check if the secure code is currently allocated.
      *
-     * @return bool Returns true if the access code is allocated, false otherwise.
+     * @return bool Returns true if the secure code is allocated, false otherwise.
      */
     public function isAllocated(): bool
     {
@@ -103,9 +103,9 @@ class AccessCode extends Model
     }
 
     /**
-     * Reset the access code, making it available for reallocation.
+     * Reset the secure code, making it available for reallocation.
      *
-     * @return self Returns the AccessCode model with the new allocation.
+     * @return self Returns the secureCode model with the new allocation.
      */
     public function reset(): self
     {
@@ -119,11 +119,11 @@ class AccessCode extends Model
     }
 
     /**
-     * Allocate the access code to an owner.
+     * Allocate the secure code to an owner.
      *
-     * @param string $ownerId The id of the owner to whom the access code will be allocated.
+     * @param string $ownerId The id of the owner to whom the secure code will be allocated.
      *
-     * @return self Returns the AccessCode model with the new allocation.
+     * @return self Returns the secureCode model with the new allocation.
      */
     public function allocate(string $ownerId): self
     {

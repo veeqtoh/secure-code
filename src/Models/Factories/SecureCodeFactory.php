@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Models\Factories;
+namespace Veeqtoh\SecureCode\Models\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Veeqtoh\DoorAccess\Classes\CodeGenerator;
-use Veeqtoh\DoorAccess\Models\AccessCode;
+use Veeqtoh\SecureCode\Classes\CodeGenerator;
+use Veeqtoh\SecureCode\Models\SecureCode;
 
 /**
- * @extends Factory<AccessCode>
+ * @extends Factory<SecureCode>
  */
-class AccessCodeFactory extends Factory
+class SecureCodeFactory extends Factory
 {
-    protected $model = AccessCode::class;
+    protected $model = SecureCode::class;
 
     public function definition(): array
     {
@@ -30,7 +30,7 @@ class AccessCodeFactory extends Factory
         ];
     }
 
-    public function deactivated(): AccessCodeFactory
+    public function deactivated(): SecureCodeFactory
     {
         return $this->state(function () {
             return [
@@ -39,7 +39,7 @@ class AccessCodeFactory extends Factory
         });
     }
 
-    public function inactive(): AccessCodeFactory
+    public function inactive(): SecureCodeFactory
     {
         return $this->state(function () {
             return [

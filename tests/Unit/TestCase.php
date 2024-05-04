@@ -1,12 +1,12 @@
 <?php
 
-namespace Veeqtoh\DoorAccess\Tests\Unit;
+namespace Veeqtoh\SecureCode\Tests\Unit;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Veeqtoh\DoorAccess\Facades\DoorAccess;
-use Veeqtoh\DoorAccess\Providers\DoorAccessProvider;
+use Veeqtoh\SecureCode\Facades\SecureCode;
+use Veeqtoh\SecureCode\Providers\SecureCodeProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -17,23 +17,25 @@ abstract class TestCase extends OrchestraTestCase
      * Load package service provider.
      *
      * @param  $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
     {
-        return [DoorAccessProvider::class];
+        return [SecureCodeProvider::class];
     }
 
     /**
      * Get package aliases.
      *
      * @param  \Illuminate\Foundation\Application  $app
+     *
      * @return array
      */
     protected function getPackageAliases($app)
     {
         return [
-            'DoorAccess' => DoorAccess::class,
+            'SecureCode' => SecureCode::class,
         ];
     }
 }

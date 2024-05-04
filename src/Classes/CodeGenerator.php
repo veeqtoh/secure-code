@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Veeqtoh\DoorAccess\Classes;
+namespace Veeqtoh\SecureCode\Classes;
 
-use Veeqtoh\DoorAccess\Classes\Traits\ConfigTrait;
+use Veeqtoh\SecureCode\Classes\Traits\ConfigTrait;
 
 /**
  * Class CodeGenerator
  * This class is used for generating unique, secure codes.
  *
- * @package Veeqtoh\DoorAccess\Classes
+ * @package Veeqtoh\SecureCode\Classes
  */
 class CodeGenerator
 {

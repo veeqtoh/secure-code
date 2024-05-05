@@ -93,7 +93,7 @@ The quickest way to get started with generating a secure code is by using the sn
 use Veeqtoh\SecureCode\Classes\CodeGenerator;
 
 $codeGenerator = new CodeGenerator();
-$secureCode = $codeGenerator->generate();
+$secureCode    = $codeGenerator->generate();
 
 echo "Generated code: $code";
 ```
@@ -115,9 +115,9 @@ $validators = [
     new MinimumUniqueCharactersValidator(),
   ];
 
-// Generate a secure n-digit code
+// Generate a secure n-digit code.
 $codeGenerator = new CodeGenerator();
-$secureCode = $codeGenerator->generate();
+$secureCode    = $codeGenerator->generate();
 
 echo "Generated code: $code";
 ```
@@ -180,7 +180,7 @@ To allocate a code to an owner, you can use the allocateCode method:
 use Veeqtoh\DoorAccess\Classes\CodeManager;
 
 $manager = new CodeManager();
-$code = $manager->allocateCode('generated-code', 'owner-id');
+$code    = $manager->allocateCode('generated-code', 'owner-id');
 
 echo "Allocated code: $code";
 ```

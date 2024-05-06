@@ -101,10 +101,12 @@ echo "Generated code: $code";
 #### Validation
 
 By default, the secure code is not validated against any condition. The library however, comes with three (3) inbuilt validation classes that checks for;
-1. Palindrome
-2. Repeated characters
-3. Sequence length
+1. Palindrome.
+2. Repeated characters.
+3. Sequence length.
+
 These validation classes can be initialized and passed down to the code generator class in an array on it's constructor as shown below;
+
 ```php
 use Veeqtoh\SecureCode\Classes\CodeGenerator;
 

@@ -20,12 +20,11 @@
     - [Publish the Config and Migrations](#publish-the-config-and-migrations)
     - [Migrate the Database](#migrate-the-database)
 - [Usage](#usage)
-    - [Generating Secure Codes](#denerating-secure-codess)
+    - [Generating Secure Codes](#generating-secure-codess)
         - [Quick Start](#quick-start)
         - [Validation](#validation)
-        - [Defining your Custom Validation Class](#defining-your-custom-validation-classs)
+        - [Defining your Custom Validation Class](#defining-your-custom-validation-class)
         - [Customizing Configs](#customizing-configs)
-        - [Using Custom Rules](#using-custom-rules)
         - [Facade](#facade)
     - [Using the Secure code Manager](#using-the-secure-code-manager)
         - [Allocating a Code](#allocating-a-code)
@@ -221,6 +220,15 @@ if ($success) {
     echo "Failed to destroy code";
 }
 
+```
+
+#### Config Validation
+By default, the values defined in the ``` secure-code.php ``` config file are validated as the library contains
+a validator that is used to ensure that your values are safe to use. To disable the config validation, you can set the
+following option in the config:
+
+```
+'validate_config' => false,
 ```
 
 #### Custom Database Connection

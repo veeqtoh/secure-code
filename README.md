@@ -117,7 +117,7 @@ $validators = [
   ];
 
 // Generate a secure n-digit code.
-$codeGenerator = new CodeGenerator();
+$codeGenerator = new CodeGenerator($validators);
 $secureCode    = $codeGenerator->generate();
 
 echo "Generated code: $code";
